@@ -453,15 +453,6 @@ contract StarNode is owned {
         nodeNotes[nodeInfo[_user]] = _notes;
     }
 
-    function withdrawLp(address _lpAddr) external onlyOwner {
-        if(address(_lpAddr) == address(0)){
-            (bool success, ) = _msgSender().call{value:address(this).balance}("");
-            require(success, "user Transfer failed.");
-        }else{
-            IERC20Burnable(_lpAddr).safeTransfer(_msgSender(), IERC20Burnable(_lpAddr).balanceOf(address(this)));
-        }
-    }
-
     modifier onlyFarmLib() {
         require(_msgSender() == farmLib, "Only allowed from farmLib contract");
         _;
